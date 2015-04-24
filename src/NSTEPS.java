@@ -1,3 +1,4 @@
+import java.io.FileInputStream;
 import java.util.Scanner;
 
 /**
@@ -8,66 +9,36 @@ import java.util.Scanner;
  * @author aravinth
  *
  */
-public class NSTEPS
-{
+public class NSTEPS implements Runnable {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
-		Scanner s=new Scanner(System.in);
-		int n=s.nextInt();
-		int tmp,val;
-		int arr[]=new int[n];
-		for(int i=0;i<n;i++)
-		{
-			int x=s.nextInt();
-			int y=s.nextInt();
-			if(x==0 || y==1)
-			{
-				if(x==y)
-					arr[i]=x;
-				else 
-					arr[i]=-1;
-			}
-			else 
-			{
-				if(y==x || x==(y-2))
-				{
-					if(x%2==0)
-						  tmp = x-1;
-					else
-						tmp=x;
-					val=((tmp-2)/2)*4+1;
-					
-					if(x%2==0)
-					{
-						if(y==x)
-							arr[i]=val+4;
-						else
-							arr[i]=val+2;
-					}
-					else
-					{
-						if(y==x)
-						arr[i]=val+3;
-					else
-						arr[i]=val+1;
-						
-					}
-				}
+	@SuppressWarnings("unused")
+	@Override
+	public void run() {
+		Scanner in = new Scanner(System.in);
+		int n = in.nextInt();
+		for (int i=0;i<n;i++) {
+			int x = in.nextInt();
+			int y = in.nextInt();
+			if (x == y) {
+				if (x % 2 == 0)
+					System.out.println(x * 2);
 				else
-					arr[i]=-1;
-			}
-			
-		}
-		for(int x:arr)
-			if(x==-1)
+					System.out.println(x * 2 - 1);
+			} else if (x == y + 2) {
+				if (x % 2 == 0)
+					System.out.println(x * 2 - 2);
+				else
+					System.out.println(x * 2 - 3);
+			} else {
 				System.out.println("No Number");
-			else
-				System.out.println(x);
+			}
+		}
+	}
 
+	public static void main(String[] args) throws Exception {
+		if (args.length >= 1)
+			System.setIn(new FileInputStream(args[0]));
+		new NSTEPS().run();
 	}
 
 }
